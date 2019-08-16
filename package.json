@@ -11,7 +11,7 @@
     "lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue src/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "apiaoqzh",
   "license": "ISC",
   "dependencies": {
     "qrcode": "^1.4.1"

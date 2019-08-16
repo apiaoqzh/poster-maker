@@ -173,6 +173,7 @@ await maker.putQrcode({
 
 ### putText(options)
 放置文字<br>
+
 **参数:**
 |参数名|默认值|描述
 |---|---|---
