@@ -34,7 +34,7 @@ export default {
       fontSize: 30,
       color: '#666'
     })
-    await maker.putRoundImg({
+    await maker.putCircularImg({
       img: require('@/assets/img/avatar.jpg'),
       x: 10,
       y: 10,

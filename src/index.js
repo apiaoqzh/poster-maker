@@ -45,11 +45,11 @@ class Maker {
     this.ctx.restore()
   }
 
-  putText ({ text = '', x = 0, y = 0, fontSize = 12, rotate = 0, textBaseline = 'middle', fontColor = '#000', align = 'left', fontWeight = 'normal', fontStyle = 'sans-serif' }) {
+  putText ({ text = '', x = 0, y = 0, fontSize = 12, rotate = 0, textBaseline = 'middle', fontColor = '#000', align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }) {
     this.ctx.save()
     this.ctx.translate(x, y)
     this.ctx.rotate(rotate * Math.PI / 180 || 0)
-    this.ctx.font = `${fontWeight} ${fontSize}px ${fontStyle}`
+    this.ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`
     this.ctx.textAlign = align
     this.ctx.textBaseline = textBaseline
     this.ctx.fillStyle = fontColor || '#000'
@@ -100,7 +100,7 @@ class Maker {
     return Promise.resolve()
   }
   // 放置圆形图片
-  async putRoundImg ({ img = '', x = 0, y = 0, width = 0, height = 0, rotate = 0 }) {
+  async putCircularImg ({ img = '', x = 0, y = 0, width = 0, height = 0, rotate = 0 }) {
   // 搞事之前,先保存
     this.ctx.save()
     let imgDom = null
