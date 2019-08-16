@@ -1,0 +1,37 @@
+// 共同样式
+
+@import './mixin.scss';
+
+.f-left {
+  float: left
+}
+
+.f-right {
+  float: right
+}
+
+.f-clearfix {
+  zoom: 1;
+  clear: both
+}
+
+.f-clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0
+}
+
+.f-none {
+  display: none
+}
+
+.f-pointer {
+  cursor: pointer;
+}
+
+.u-arrow {
+  @include arrow();
+}

@@ -1,0 +1,159 @@
+/* define mixin */
+// flex
+@mixin flex($justifyContent: flex-start, $alignItems: flex-start) {
+  display: flex;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
+}
+// 单行省略
+@mixin ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* define mixin */
+// 单行省略
+%ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/**
+* 1px细线
+* border-width-1px(top,right,bottom,left, border-color, border-radius);
+* top,right,bottom,left 值为 1 或者 0;
+* @include border-width-1px(0, 0, 2, 0, #f57c38);
+*/
+@mixin border-width-1px($border-width-top: 0, $border-width-right: 0, $border-width-bottom: 0, $border-width-left: 0, $border-color: $g-bordercolor, $border-radius: 0){
+  position: relative;
+  border-color: $border-color;
+  border-width: #{$border-width-top}Px #{$border-width-right}Px #{$border-width-bottom}Px #{$border-width-left}Px; // ignored  postcss-pxtorem
+  border-style: solid;
+  box-sizing: border-box;
+  @if $border-radius != 0{
+    border-radius: $border-radius/2px * 1Px;
+  }
+
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    border: none;
+    &::before{
+      content: "";
+      position: absolute;
+      box-sizing: border-box;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-color: $border-color;
+      border-width: #{$border-width-top}Px #{$border-width-right}Px #{$border-width-bottom}Px #{$border-width-left}Px; // ignored  postcss-pxtorem
+      border-style: solid;
+      width: 200%;
+      height: 200%;
+      transform: scale(.5);
+      transform-origin: 0 0;
+      pointer-events: none;
+      @if $border-radius != 0{
+        border-radius: $border-radius;
+      }
+    }
+  }
+}
+// 定义border边框
+@mixin border($border-direction: top, $border-width: 0.05rem, $border-style: solid, $border-color: $lightenGrayColor2) {
+  @if ($border-direction == top) {
+    border-top: $border-width $border-style $border-color
+  }
+  @if ($border-direction == bottom) {
+    border-bottom: $border-width $border-style $border-color
+  }
+  @if ($border-direction == left) {
+    border-left: $border-width $border-style $border-color
+  }
+  @if ($border-direction == right) {
+    border-right: $border-width $border-style $border-color
+  }
+  @if ($border-direction == all) {
+    border: $border-width $border-style $border-color
+  }
+}
+// 向右箭头
+@mixin arrowRight($arrowBorder: 2px, $arrowSize: 0.5rem, $arrowRight: 1rem, $color: $lightenGrayColor2){
+  border: solid $arrowBorder $color;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  content: " ";
+  top: 50%;
+  right: $arrowRight;
+  position: absolute;
+  width: $arrowSize;
+  height: $arrowSize;
+  -webkit-transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+@mixin checkIcon {
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 100%;
+  border: 1px solid #ccc;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  &:after{
+    border: 1px solid transparent;
+    border-left: 0;
+    border-top: 0;
+    content: " ";
+    top: 1px;
+    left: 4px;
+    position: absolute;
+    width: 3px;
+    height: 6px;
+    transform: rotate(45deg) scale(0);
+    transition: transform .2s;
+  }
+  &.checked{
+    background-color: $lightenMainColor;
+    border-color: $lightenMainColor;
+    &:after{
+      border-color: #fff;
+      transform: rotate(45deg) scale(1);
+    }
+  }
+}
+
+/* define color */
+// bg
+$pageBgColor: #f9f9f9;
+$boxBgColor: #fff;
+// font
+$baseFontColor: #000;
+$darkenGrayFontColor: #333;
+$lightenGrayColor: #999;
+$lightenGrayColor2: #eee;
+$whiteFontColor: #fff;
+// vi
+$mainColor: #5876A6;
+$lightenMainColor: #32ABEA;
+// button
+$btnRedColor: #F93535;
+// other
+$whiteLineColor: #fff;
+
+/* define color */
+// define Global variable,such like color variable
+$red: #C7000B;
+$gray: #eeeeee;
+$black: #000;
+$CodGray: #101010;
+$dustyGray: #999;
+$lightGray: #eee;
+$white:#fff;
+$Gallery: #efefef;
