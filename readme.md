@@ -79,14 +79,14 @@ export default {
 ### putFillRect(options)
 放置一个矩形<br>
 **参数:**
-|参数名|默认值|描述
-|---|---|---
-background|#fff|填充色
-width|0|宽度
-height|0|高度
-x|0|相对于左上角x轴定位
-y|0|相对于左上角y轴定位
-rotate|0|旋转角度
+|参数名|默认值|描述|
+|---|---|---|
+background|#fff|填充色|
+width|0|宽度|
+height|0|高度|
+x|0|相对于左上角x轴定位|
+y|0|相对于左上角y轴定位|
+rotate|0|旋转角度|
 
 
 ```JavaScript
@@ -100,14 +100,14 @@ await maker.putFillRect({
 ### putImg(options)
 放置一个图片<br>
 **参数:**
-|参数名|默认值|描述
-|---|---|---
+|参数名|默认值|描述|
+|---|---|---|
 img||图片的路径或者是图片的DOM对象
-width|0|宽度
-height|0|高度
-x|0|相对于左上角x轴定位
-y|0|相对于左上角y轴定位
-rotate|0|旋转角度
+width|0|宽度|
+height|0|高度|
+x|0|相对于左上角x轴定位|
+y|0|相对于左上角y轴定位|
+rotate|0|旋转角度|
 
 
 ```JavaScript
@@ -124,14 +124,14 @@ await maker.putImg({
 ### putCircularImg(options)
 放置一个裁切成圆形的图片<br>
 **参数:**
-|参数名|默认值|描述
-|---|---|---
-img||图片的路径或者是图片的DOM对象
-width|0|宽度
-height|0|高度
-x|0|相对于左上角x轴定位
-y|0|相对于左上角y轴定位
-rotate|0|旋转角度
+|参数名|默认值|描述|
+|---|---|---|
+img||图片的路径或者是图片的DOM对象|
+width|0|宽度|
+height|0|高度|
+x|0|相对于左上角x轴定位|
+y|0|相对于左上角y轴定位|
+rotate|0|旋转角度|
 
 
 ```JavaScript
@@ -148,16 +148,16 @@ await maker.putCircularImg({
 ### putQrcode(options)
 放置一个二维码<br>
 **参数:**
-|参数名|默认值|描述
-|---|---|---
-text||二维码的内容
-width|200|宽度
-x|0|相对于左上角x轴定位
-y|0|相对于左上角y轴定位
-rotate|0|旋转角度
-margin|0|外边框
-logo||二维码中间的logo的路径或者图片DOM对象
-logoWidth|width / 3| 二维码的宽度(建议不要太大,可能会影响扫码效果)
+|参数名|默认值|描述|
+|---|---|---|
+text||二维码的内容|
+width|200|宽度|
+x|0|相对于左上角x轴定位|
+y|0|相对于左上角y轴定位|
+rotate|0|旋转角度|
+margin|0|外边框|
+logo||二维码中间的logo的路径或者图片DOM对象|
+logoWidth|width / 3| 二维码的宽度(建议不要太大,可能会影响扫码效果)|
 
 
 ```JavaScript
@@ -176,25 +176,25 @@ await maker.putQrcode({
 
 **参数:**
 |参数名|默认值|描述
-|---|---|---
-text||文字
-x|0|相对于左上角x轴定位
-y|0|相对于左上角y轴定位
-rotate|0|旋转角度
-fontSize|12|字体大小
-textBaseline|middle|文字的基线
-fontColor|#000|字色
-align|对齐方式| left,center,right
-fontWeight|normal|规定字体的粗细。可能的值:<br>normal<br>bold<br>bolder<br>lighter<br>100<br>200<br>300<br>400<br>500<br>600<br>700<br>800<br>900<br>
-fontFamily|sans-serif|字体
+|---|---|---|
+text||文字|
+x|0|相对于左上角x轴定位|
+y|0|相对于左上角y轴定位|
+rotate|0|旋转角度|
+fontSize|12|字体大小|
+textBaseline|middle|文字的基线|
+fontColor|#000|字色|
+align|对齐方式| left,center,right|
+fontWeight|normal|规定字体的粗细。可能的值:<br>normal<br>bold<br>bolder<br>lighter<br>100<br>200<br>300<br>400<br>500<br>600<br>700<br>800<br>900<br>|
+fontFamily|sans-serif|字体|
 
 ### canvasToDataUrl(type, value)
 获取最终图片的base64<br>
 **参数:**
-|参数名|默认值|描述
-|---|---|---
-type|image/jpeg|输出格式
-value|1|输出精度(0.1-1)
+|参数名|默认值|描述|
+|---|---|---|
+type|image/jpeg|输出格式|
+value|1|输出精度(0.1-1)|
 
 ```JavaScript
 let img = await maker.canvasToDataUrl()
