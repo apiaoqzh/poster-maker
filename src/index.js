@@ -3,9 +3,11 @@ import QRCode from 'qrcode'
 class Maker {
   constructor (options) {
     let dom = document.createElement('canvas')
-    dom.setAttribute('width', options.width || 0)
-    dom.setAttribute('height', options.height || 0)
-    dom.style = 'position: fixed; left: 15000px; bottom: -15000px;'
+    dom.width = options.width || 0
+    dom.height = options.height || 0
+    dom.style.position = 'fixed'
+    dom.style.left = '15000px'
+    dom.style.bottom = '-15000px'
     this.canvas = document.body.appendChild(dom)
     this.ctx = this.canvas.getContext('2d')
     if (options.backgroundColor) {
