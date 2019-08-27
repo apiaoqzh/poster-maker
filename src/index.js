@@ -2,21 +2,25 @@ import QRCode from 'qrcode'
 
 class Maker {
   constructor (options) {
-    let dom = document.createElement('canvas')
-    dom.width = options.width || 0
-    dom.height = options.height || 0
-    dom.style.position = 'fixed'
-    dom.style.left = '15000px'
-    dom.style.bottom = '-15000px'
-    this.canvas = document.body.appendChild(dom)
-    this.ctx = this.canvas.getContext('2d')
-    if (options.backgroundColor) {
-      this.putFillRect({
-        background: options.backgroundColor,
-        width: options.width,
-        height: options.height
-      })
+    try {
+      let dom = document.createElement('canvas')
+      dom.width = options.width || 0
+      dom.height = options.height || 0
+      dom.style.position = 'fixed'
+      dom.style.left = '15000px'
+      dom.style.bottom = '-15000px'
+      this.canvas = document.body.appendChild(dom)
+    } catch (error) {
+      console.error(error)
     }
+    this.ctx = this.canvas.getContext('2d')
+    // if (options.backgroundColor) {
+    //   this.putFillRect({
+    //     background: options.backgroundColor,
+    //     width: options.width,
+    //     height: options.height
+    //   })
+    // }
   }
 
   putFillRect ({ background = '#fff', width = 0, height = 0, x = 0, y = 0, rotate = 0 }) {
