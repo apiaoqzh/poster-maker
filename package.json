@@ -1,6 +1,6 @@
 {
   "name": "poster-maker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "一个基于canvas的专门用来生成图片的小工具",
   "main": "dist/poster-maker.min.js",
   "scripts": {
