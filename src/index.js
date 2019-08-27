@@ -14,13 +14,13 @@ class Maker {
       console.error(error)
     }
     this.ctx = this.canvas.getContext('2d')
-    // if (options.backgroundColor) {
-    //   this.putFillRect({
-    //     background: options.backgroundColor,
-    //     width: options.width,
-    //     height: options.height
-    //   })
-    // }
+    if (options.backgroundColor) {
+      this.putFillRect({
+        background: options.backgroundColor,
+        width: options.width,
+        height: options.height
+      })
+    }
   }
 
   putFillRect ({ background = '#fff', width = 0, height = 0, x = 0, y = 0, rotate = 0 }) {

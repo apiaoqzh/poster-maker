@@ -91,13 +91,15 @@ function () {
       console.error(error);
     }
 
-    this.ctx = this.canvas.getContext('2d'); // if (options.backgroundColor) {
-    //   this.putFillRect({
-    //     background: options.backgroundColor,
-    //     width: options.width,
-    //     height: options.height
-    //   })
-    // }
+    this.ctx = this.canvas.getContext('2d');
+
+    if (options.backgroundColor) {
+      this.putFillRect({
+        background: options.backgroundColor,
+        width: options.width,
+        height: options.height
+      });
+    }
   }
 
   createClass_default()(Maker, [{
