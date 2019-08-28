@@ -49,6 +49,37 @@ class Maker {
     this.ctx.translate(-x, -y)
     // 回滚,让ctx对象回到图层上
     this.ctx.restore()
+    return Promise.resolve()
+  }
+
+  putLine ({ width = 1, lineWidth = width, color = '#000', start = { x: 0, y: 0 }, end = null }) {
+    if (!end) return Promise.reject(new Error('请设置终点'))
+    this.ctx.save()
+    this.ctx.beginPath()
+    this.ctx.lineWidth = lineWidth
+    this.ctx.strokeStyle = color // 红色路径
+    this.ctx.moveTo(start.x, start.y)
+    this.ctx.lineTo(end.x, end.y)
+    this.ctx.stroke()
+    this.ctx.restore()
+  }
+  putPolygon ({ background = '', borderWidth = 0, borderColor = '', paths = [] }) {
+    this.ctx.save()
+    this.ctx.beginPath()
+    borderWidth && (this.ctx.lineWidth = borderWidth)
+    borderColor && (this.ctx.strokeStyle = borderColor)
+    if (paths.length <= 2) return Promise.reject(new Error('请设置至少3个端点'))
+    for (let path of paths) {
+      this.ctx.lineTo(path.x, path.y)
+    }
+    this.ctx.closePath()
+    if (background) {
+      this.ctx.fillStyle = background
+      this.ctx.fill()
+    }
+    borderColor && this.ctx.stroke()
+    this.ctx.restore()
+    return Promise.resolve()
   }
 
   putText ({ text = '', x = 0, y = 0, fontSize = 12, rotate = 0, textBaseline = 'middle', color = '#000', fontColor = color, align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }) {

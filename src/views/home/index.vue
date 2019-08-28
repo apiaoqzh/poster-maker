@@ -50,6 +50,7 @@ export default {
       height: 100,
       rotate: 90
     })
+    // 放一个二维码
     await maker.putQrcode({
       text: 'http://www.baidu.com',
       x: 10,
@@ -57,6 +58,38 @@ export default {
       logo: require('@/assets/img/avatar.jpg'),
       width: 200,
       height: 200
+    })
+    // 绘制多边形
+    await maker.putPolygon({
+      background: 'rgba(123,123,123, 0.6)',
+      borderWidth: 2,
+      borderColor: '#000000',
+      paths: [{
+        x: 200,
+        y: 100
+      }, {
+        x: 130,
+        y: 200
+      }, {
+        x: 140,
+        y: 300
+      }, {
+        x: 190,
+        y: 300
+      }]
+    })
+    // 绘制线条
+    await maker.putLine({
+      width: 5,
+      color: 'red',
+      start: {
+        x: 200,
+        y: 100
+      },
+      end: {
+        x: 190,
+        y: 200
+      }
     })
     this.poster = await maker.canvasToDataUrl()
   }
