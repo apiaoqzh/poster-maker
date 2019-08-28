@@ -143,32 +143,111 @@ function () {
       this.ctx.translate(-x, -y); // 回滚,让ctx对象回到图层上
 
       this.ctx.restore();
+      return Promise.resolve();
+    }
+  }, {
+    key: "putLine",
+    value: function putLine(_ref2) {
+      var _ref2$width = _ref2.width,
+          width = _ref2$width === void 0 ? 1 : _ref2$width,
+          _ref2$lineWidth = _ref2.lineWidth,
+          lineWidth = _ref2$lineWidth === void 0 ? width : _ref2$lineWidth,
+          _ref2$color = _ref2.color,
+          color = _ref2$color === void 0 ? '#000' : _ref2$color,
+          _ref2$start = _ref2.start,
+          start = _ref2$start === void 0 ? {
+        x: 0,
+        y: 0
+      } : _ref2$start,
+          _ref2$end = _ref2.end,
+          end = _ref2$end === void 0 ? null : _ref2$end;
+      if (!end) return Promise.reject(new Error('请设置终点'));
+      this.ctx.save();
+      this.ctx.beginPath();
+      this.ctx.lineWidth = lineWidth;
+      this.ctx.strokeStyle = color; // 红色路径
+
+      this.ctx.moveTo(start.x, start.y);
+      this.ctx.lineTo(end.x, end.y);
+      this.ctx.stroke();
+      this.ctx.restore();
+    }
+  }, {
+    key: "putPolygon",
+    value: function putPolygon(_ref3) {
+      var _ref3$background = _ref3.background,
+          background = _ref3$background === void 0 ? '' : _ref3$background,
+          _ref3$borderWidth = _ref3.borderWidth,
+          borderWidth = _ref3$borderWidth === void 0 ? 0 : _ref3$borderWidth,
+          _ref3$borderColor = _ref3.borderColor,
+          borderColor = _ref3$borderColor === void 0 ? '' : _ref3$borderColor,
+          _ref3$paths = _ref3.paths,
+          paths = _ref3$paths === void 0 ? [] : _ref3$paths;
+      this.ctx.save();
+      this.ctx.beginPath();
+      borderWidth && (this.ctx.lineWidth = borderWidth);
+      borderColor && (this.ctx.strokeStyle = borderColor);
+      if (paths.length <= 2) return Promise.reject(new Error('请设置至少3个端点'));
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = paths[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var path = _step.value;
+          this.ctx.lineTo(path.x, path.y);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      this.ctx.closePath();
+
+      if (background) {
+        this.ctx.fillStyle = background;
+        this.ctx.fill();
+      }
+
+      borderColor && this.ctx.stroke();
+      this.ctx.restore();
+      return Promise.resolve();
     }
   }, {
     key: "putText",
-    value: function putText(_ref2) {
-      var _ref2$text = _ref2.text,
-          text = _ref2$text === void 0 ? '' : _ref2$text,
-          _ref2$x = _ref2.x,
-          x = _ref2$x === void 0 ? 0 : _ref2$x,
-          _ref2$y = _ref2.y,
-          y = _ref2$y === void 0 ? 0 : _ref2$y,
-          _ref2$fontSize = _ref2.fontSize,
-          fontSize = _ref2$fontSize === void 0 ? 12 : _ref2$fontSize,
-          _ref2$rotate = _ref2.rotate,
-          rotate = _ref2$rotate === void 0 ? 0 : _ref2$rotate,
-          _ref2$textBaseline = _ref2.textBaseline,
-          textBaseline = _ref2$textBaseline === void 0 ? 'middle' : _ref2$textBaseline,
-          _ref2$color = _ref2.color,
-          color = _ref2$color === void 0 ? '#000' : _ref2$color,
-          _ref2$fontColor = _ref2.fontColor,
-          fontColor = _ref2$fontColor === void 0 ? color : _ref2$fontColor,
-          _ref2$align = _ref2.align,
-          align = _ref2$align === void 0 ? 'left' : _ref2$align,
-          _ref2$fontWeight = _ref2.fontWeight,
-          fontWeight = _ref2$fontWeight === void 0 ? 'normal' : _ref2$fontWeight,
-          _ref2$fontFamily = _ref2.fontFamily,
-          fontFamily = _ref2$fontFamily === void 0 ? 'sans-serif' : _ref2$fontFamily;
+    value: function putText(_ref4) {
+      var _ref4$text = _ref4.text,
+          text = _ref4$text === void 0 ? '' : _ref4$text,
+          _ref4$x = _ref4.x,
+          x = _ref4$x === void 0 ? 0 : _ref4$x,
+          _ref4$y = _ref4.y,
+          y = _ref4$y === void 0 ? 0 : _ref4$y,
+          _ref4$fontSize = _ref4.fontSize,
+          fontSize = _ref4$fontSize === void 0 ? 12 : _ref4$fontSize,
+          _ref4$rotate = _ref4.rotate,
+          rotate = _ref4$rotate === void 0 ? 0 : _ref4$rotate,
+          _ref4$textBaseline = _ref4.textBaseline,
+          textBaseline = _ref4$textBaseline === void 0 ? 'middle' : _ref4$textBaseline,
+          _ref4$color = _ref4.color,
+          color = _ref4$color === void 0 ? '#000' : _ref4$color,
+          _ref4$fontColor = _ref4.fontColor,
+          fontColor = _ref4$fontColor === void 0 ? color : _ref4$fontColor,
+          _ref4$align = _ref4.align,
+          align = _ref4$align === void 0 ? 'left' : _ref4$align,
+          _ref4$fontWeight = _ref4.fontWeight,
+          fontWeight = _ref4$fontWeight === void 0 ? 'normal' : _ref4$fontWeight,
+          _ref4$fontFamily = _ref4.fontFamily,
+          fontFamily = _ref4$fontFamily === void 0 ? 'sans-serif' : _ref4$fontFamily;
       this.ctx.save();
       this.ctx.translate(x, y);
       this.ctx.rotate(rotate * Math.PI / 180 || 0);
@@ -188,14 +267,14 @@ function () {
     value: function () {
       var _putImg = asyncToGenerator_default()(
       /*#__PURE__*/
-      regenerator_default.a.mark(function _callee(_ref3) {
-        var _ref3$img, img, _ref3$x, x, _ref3$y, y, _ref3$width, width, _ref3$height, height, _ref3$rotate, rotate, imgDom, w, h, centerX, centerY;
+      regenerator_default.a.mark(function _callee(_ref5) {
+        var _ref5$img, img, _ref5$x, x, _ref5$y, y, _ref5$width, width, _ref5$height, height, _ref5$rotate, rotate, imgDom, w, h, centerX, centerY;
 
         return regenerator_default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _ref3$img = _ref3.img, img = _ref3$img === void 0 ? '' : _ref3$img, _ref3$x = _ref3.x, x = _ref3$x === void 0 ? 0 : _ref3$x, _ref3$y = _ref3.y, y = _ref3$y === void 0 ? 0 : _ref3$y, _ref3$width = _ref3.width, width = _ref3$width === void 0 ? 0 : _ref3$width, _ref3$height = _ref3.height, height = _ref3$height === void 0 ? 0 : _ref3$height, _ref3$rotate = _ref3.rotate, rotate = _ref3$rotate === void 0 ? 0 : _ref3$rotate;
+                _ref5$img = _ref5.img, img = _ref5$img === void 0 ? '' : _ref5$img, _ref5$x = _ref5.x, x = _ref5$x === void 0 ? 0 : _ref5$x, _ref5$y = _ref5.y, y = _ref5$y === void 0 ? 0 : _ref5$y, _ref5$width = _ref5.width, width = _ref5$width === void 0 ? 0 : _ref5$width, _ref5$height = _ref5.height, height = _ref5$height === void 0 ? 0 : _ref5$height, _ref5$rotate = _ref5.rotate, rotate = _ref5$rotate === void 0 ? 0 : _ref5$rotate;
                 // 搞事之前,先保存
                 this.ctx.save();
                 imgDom = null;
@@ -275,14 +354,14 @@ function () {
     value: function () {
       var _putCircularImg = asyncToGenerator_default()(
       /*#__PURE__*/
-      regenerator_default.a.mark(function _callee2(_ref4) {
-        var _ref4$img, img, _ref4$x, x, _ref4$y, y, _ref4$width, width, _ref4$height, height, _ref4$rotate, rotate, imgDom, w, h, centerX, centerY, round, _round;
+      regenerator_default.a.mark(function _callee2(_ref6) {
+        var _ref6$img, img, _ref6$x, x, _ref6$y, y, _ref6$width, width, _ref6$height, height, _ref6$rotate, rotate, imgDom, w, h, centerX, centerY, round, _round;
 
         return regenerator_default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _ref4$img = _ref4.img, img = _ref4$img === void 0 ? '' : _ref4$img, _ref4$x = _ref4.x, x = _ref4$x === void 0 ? 0 : _ref4$x, _ref4$y = _ref4.y, y = _ref4$y === void 0 ? 0 : _ref4$y, _ref4$width = _ref4.width, width = _ref4$width === void 0 ? 0 : _ref4$width, _ref4$height = _ref4.height, height = _ref4$height === void 0 ? 0 : _ref4$height, _ref4$rotate = _ref4.rotate, rotate = _ref4$rotate === void 0 ? 0 : _ref4$rotate;
+                _ref6$img = _ref6.img, img = _ref6$img === void 0 ? '' : _ref6$img, _ref6$x = _ref6.x, x = _ref6$x === void 0 ? 0 : _ref6$x, _ref6$y = _ref6.y, y = _ref6$y === void 0 ? 0 : _ref6$y, _ref6$width = _ref6.width, width = _ref6$width === void 0 ? 0 : _ref6$width, _ref6$height = _ref6.height, height = _ref6$height === void 0 ? 0 : _ref6$height, _ref6$rotate = _ref6.rotate, rotate = _ref6$rotate === void 0 ? 0 : _ref6$rotate;
                 // 搞事之前,先保存
                 this.ctx.save();
                 imgDom = null;
@@ -371,14 +450,14 @@ function () {
     value: function () {
       var _putQrcode = asyncToGenerator_default()(
       /*#__PURE__*/
-      regenerator_default.a.mark(function _callee3(_ref5) {
-        var _ref5$text, text, _ref5$width, width, _ref5$height, height, _ref5$margin, margin, _ref5$errorCorrection, errorCorrectionLevel, _ref5$x, x, _ref5$y, y, _ref5$rotate, rotate, _ref5$logo, logo, _ref5$logoWidth, logoWidth, _ref5$logoHeight, logoHeight, qrcode;
+      regenerator_default.a.mark(function _callee3(_ref7) {
+        var _ref7$text, text, _ref7$width, width, _ref7$height, height, _ref7$margin, margin, _ref7$errorCorrection, errorCorrectionLevel, _ref7$x, x, _ref7$y, y, _ref7$rotate, rotate, _ref7$logo, logo, _ref7$logoWidth, logoWidth, _ref7$logoHeight, logoHeight, qrcode;
 
         return regenerator_default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _ref5$text = _ref5.text, text = _ref5$text === void 0 ? '' : _ref5$text, _ref5$width = _ref5.width, width = _ref5$width === void 0 ? 200 : _ref5$width, _ref5$height = _ref5.height, height = _ref5$height === void 0 ? width : _ref5$height, _ref5$margin = _ref5.margin, margin = _ref5$margin === void 0 ? 0 : _ref5$margin, _ref5$errorCorrection = _ref5.errorCorrectionLevel, errorCorrectionLevel = _ref5$errorCorrection === void 0 ? 'H' : _ref5$errorCorrection, _ref5$x = _ref5.x, x = _ref5$x === void 0 ? 0 : _ref5$x, _ref5$y = _ref5.y, y = _ref5$y === void 0 ? 0 : _ref5$y, _ref5$rotate = _ref5.rotate, rotate = _ref5$rotate === void 0 ? 0 : _ref5$rotate, _ref5$logo = _ref5.logo, logo = _ref5$logo === void 0 ? '' : _ref5$logo, _ref5$logoWidth = _ref5.logoWidth, logoWidth = _ref5$logoWidth === void 0 ? width / 3 : _ref5$logoWidth, _ref5$logoHeight = _ref5.logoHeight, logoHeight = _ref5$logoHeight === void 0 ? logoWidth : _ref5$logoHeight;
+                _ref7$text = _ref7.text, text = _ref7$text === void 0 ? '' : _ref7$text, _ref7$width = _ref7.width, width = _ref7$width === void 0 ? 200 : _ref7$width, _ref7$height = _ref7.height, height = _ref7$height === void 0 ? width : _ref7$height, _ref7$margin = _ref7.margin, margin = _ref7$margin === void 0 ? 0 : _ref7$margin, _ref7$errorCorrection = _ref7.errorCorrectionLevel, errorCorrectionLevel = _ref7$errorCorrection === void 0 ? 'H' : _ref7$errorCorrection, _ref7$x = _ref7.x, x = _ref7$x === void 0 ? 0 : _ref7$x, _ref7$y = _ref7.y, y = _ref7$y === void 0 ? 0 : _ref7$y, _ref7$rotate = _ref7.rotate, rotate = _ref7$rotate === void 0 ? 0 : _ref7$rotate, _ref7$logo = _ref7.logo, logo = _ref7$logo === void 0 ? '' : _ref7$logo, _ref7$logoWidth = _ref7.logoWidth, logoWidth = _ref7$logoWidth === void 0 ? width / 3 : _ref7$logoWidth, _ref7$logoHeight = _ref7.logoHeight, logoHeight = _ref7$logoHeight === void 0 ? logoWidth : _ref7$logoHeight;
 
                 if (text) {
                   _context3.next = 3;
@@ -574,12 +653,48 @@ function () {
 
             case 11:
               _context.next = 13;
-              return maker.canvasToDataUrl();
+              return maker.putPolygon({
+                background: 'rgba(123,123,123, 0.6)',
+                borderWidth: 2,
+                borderColor: '#000000',
+                paths: [{
+                  x: 200,
+                  y: 100
+                }, {
+                  x: 130,
+                  y: 200
+                }, {
+                  x: 140,
+                  y: 300
+                }, {
+                  x: 190,
+                  y: 300
+                }]
+              });
 
             case 13:
+              _context.next = 15;
+              return maker.putLine({
+                width: 5,
+                color: 'red',
+                start: {
+                  x: 200,
+                  y: 100
+                },
+                end: {
+                  x: 190,
+                  y: 200
+                }
+              });
+
+            case 15:
+              _context.next = 17;
+              return maker.canvasToDataUrl();
+
+            case 17:
               this.poster = _context.sent;
 
-            case 14:
+            case 18:
             case "end":
               return _context.stop();
           }
