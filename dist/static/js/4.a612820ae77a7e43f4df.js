@@ -159,8 +159,10 @@ function () {
           rotate = _ref2$rotate === void 0 ? 0 : _ref2$rotate,
           _ref2$textBaseline = _ref2.textBaseline,
           textBaseline = _ref2$textBaseline === void 0 ? 'middle' : _ref2$textBaseline,
+          _ref2$color = _ref2.color,
+          color = _ref2$color === void 0 ? '#000' : _ref2$color,
           _ref2$fontColor = _ref2.fontColor,
-          fontColor = _ref2$fontColor === void 0 ? '#000' : _ref2$fontColor,
+          fontColor = _ref2$fontColor === void 0 ? color : _ref2$fontColor,
           _ref2$align = _ref2.align,
           align = _ref2$align === void 0 ? 'left' : _ref2$align,
           _ref2$fontWeight = _ref2.fontWeight,
@@ -534,7 +536,7 @@ function () {
                 y: 120,
                 rotate: 90,
                 fontSize: 30,
-                color: '#666'
+                color: '#00ff00'
               });
 
             case 5:
