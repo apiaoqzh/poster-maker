@@ -51,7 +51,7 @@ class Maker {
     this.ctx.restore()
   }
 
-  putText ({ text = '', x = 0, y = 0, fontSize = 12, rotate = 0, textBaseline = 'middle', fontColor = '#000', align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }) {
+  putText ({ text = '', x = 0, y = 0, fontSize = 12, rotate = 0, textBaseline = 'middle', color = '#000', fontColor = color, align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }) {
     this.ctx.save()
     this.ctx.translate(x, y)
     this.ctx.rotate(rotate * Math.PI / 180 || 0)

@@ -32,7 +32,7 @@ export default {
       y: 120,
       rotate: 90,
       fontSize: 30,
-      color: '#666'
+      color: '#00ff00'
     })
     await maker.putCircularImg({
       img: require('@/assets/img/avatar.jpg'),
