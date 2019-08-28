@@ -86,7 +86,7 @@ width|0|宽度|
 height|0|高度|
 x|0|相对于左上角x轴定位|
 y|0|相对于左上角y轴定位|
-rotate|0|旋转角度|
+rotate|0|旋转角度
 
 
 ```JavaScript
@@ -107,7 +107,7 @@ width|0|宽度|
 height|0|高度|
 x|0|相对于左上角x轴定位|
 y|0|相对于左上角y轴定位|
-rotate|0|旋转角度|
+rotate|0|旋转角度
 
 
 ```JavaScript
@@ -131,7 +131,7 @@ width|0|宽度|
 height|0|高度|
 x|0|相对于左上角x轴定位|
 y|0|相对于左上角y轴定位|
-rotate|0|旋转角度|
+rotate|0|旋转角度
 
 
 ```JavaScript
@@ -157,7 +157,7 @@ y|0|相对于左上角y轴定位|
 rotate|0|旋转角度|
 margin|0|外边框|
 logo||二维码中间的logo的路径或者图片DOM对象|
-logoWidth|width / 3| 二维码的宽度(建议不要太大,可能会影响扫码效果)|
+logoWidth|width / 3| 二维码的宽度(建议不要太大,可能会影响扫码效果)
 
 
 ```JavaScript
@@ -186,7 +186,7 @@ textBaseline|middle|文字的基线|
 fontColor|#000|字色|
 align|对齐方式| left,center,right|
 fontWeight|normal|规定字体的粗细。可能的值:<br>normal<br>bold<br>bolder<br>lighter<br>100<br>200<br>300<br>400<br>500<br>600<br>700<br>800<br>900<br>|
-fontFamily|sans-serif|字体|
+fontFamily|sans-serif|字体
 
 ### canvasToDataUrl(type, value)
 获取最终图片的base64<br>
