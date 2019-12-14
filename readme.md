@@ -188,6 +188,49 @@ align|对齐方式| left,center,right|
 fontWeight|normal|规定字体的粗细。可能的值:<br>normal<br>bold<br>bolder<br>lighter<br>100<br>200<br>300<br>400<br>500<br>600<br>700<br>800<br>900<br>|
 fontFamily|sans-serif|字体
 
+```javascript
+    // 放置一个旋转90度的文字,设置字色和字体大小
+    await maker.putText({
+      text: '23333',
+      x: 200,
+      y: 120,
+      rotate: 90,
+      fontSize: 30,
+      color: '#666'
+    })
+```
+
+
+### putParagraph(options)
+放置段落,可自动换行<br>
+
+**参数:**
+|参数名|默认值|描述
+|---|---|---|
+text||文段
+x|0|相对于左上角x轴定位|
+y|0|相对于左上角y轴定位|
+width|200|最大宽度,超出宽度会自动换行|
+fontSize|12|字体大小|
+lineHeight| 1.2| 行高|
+textBaseline|middle|文字的基线|
+fontColor|#000|字色|
+align|对齐方式| left,center,right|
+fontWeight|normal|规定字体的粗细。可能的值:<br>normal<br>bold<br>bolder<br>lighter<br>100<br>200<br>300<br>400<br>500<br>600<br>700<br>800<br>900<br>|
+fontFamily|sans-serif|字体
+
+```javascript
+// 超出width的部分会自动换行
+// 可通过↵或者 \n 或者 | 进行自定义换行
+    await maker.putParagraph({
+      text: '君不见，黄河之水天上来，奔流到海不复回。|君不见，高堂明镜悲白发，朝如青丝暮成雪。↵人生得意须尽欢，莫使金樽空对月。↵天生我材必有用，千金散尽还复来。↵烹羊宰牛且为乐，会须一饮三百杯。↵岑夫子，丹丘生，将进酒，杯莫停。↵与君歌一曲，请君为我倾耳听。↵钟鼓馔玉不足贵，但愿长醉不愿醒。↵古来圣贤皆寂寞，惟有饮者留其名。↵陈王昔时宴平乐，斗酒十千恣欢谑。↵主人何为言少钱，径须沽取对君酌。↵五花马，千金裘，↵呼儿将出换美酒，与尔同销万古愁。',
+      x: 220,
+      y: 100,
+      width: 250,
+      fontSize: 14
+    })
+```
+
 ### canvasToDataUrl(type, value)
 获取最终图片的base64<br>
 **参数:**

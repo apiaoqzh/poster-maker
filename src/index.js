@@ -1,7 +1,7 @@
 import QRCode from 'qrcode'
 
 class Maker {
-  constructor (options) {
+  constructor(options) {
     try {
       let dom = document.createElement('canvas')
       dom.width = options.width || 0
@@ -22,7 +22,13 @@ class Maker {
       })
     }
   }
-
+  /**
+   * 放一个矩形
+   *
+   * @param {*} { background = '#fff', width = 0, height = 0, x = 0, y = 0, rotate = 0 }
+   * @returns
+   * @memberof Maker
+   */
   putFillRect ({ background = '#fff', width = 0, height = 0, x = 0, y = 0, rotate = 0 }) {
     this.ctx.save()
     this.ctx.fillStyle = background
@@ -40,18 +46,24 @@ class Maker {
       // 放毒
       this.ctx.rect(0, 0, width, height)
     } else {
-    // 将坐标原点转移到目的地
+      // 将坐标原点转移到目的地
       this.ctx.translate(x, y)
       // 放毒
       this.ctx.fillRect(0, 0, width, height)
-    // 把坐标原点放回去
+      // 把坐标原点放回去
     }
     this.ctx.translate(-x, -y)
     // 回滚,让ctx对象回到图层上
     this.ctx.restore()
     return Promise.resolve()
   }
-
+  /**
+   * 放一条线
+   *
+   * @param {*} { width = 1, lineWidth = width, color = '#000', start = { x: 0, y: 0 }, end = null }
+   * @returns
+   * @memberof Maker
+   */
   putLine ({ width = 1, lineWidth = width, color = '#000', start = { x: 0, y: 0 }, end = null }) {
     if (!end) return Promise.reject(new Error('请设置终点'))
     this.ctx.save()
@@ -63,6 +75,13 @@ class Maker {
     this.ctx.stroke()
     this.ctx.restore()
   }
+  /**
+   * 放一个多边形
+   *
+   * @param {*} { background = '', borderWidth = 0, borderColor = '', paths = [] }
+   * @returns
+   * @memberof Maker
+   */
   putPolygon ({ background = '', borderWidth = 0, borderColor = '', paths = [] }) {
     this.ctx.save()
     this.ctx.beginPath()
@@ -81,7 +100,13 @@ class Maker {
     this.ctx.restore()
     return Promise.resolve()
   }
-
+  /**
+ * 放文字
+ *
+ * @param {*} { text = '', x = 0, y = 0, fontSize = 12, rotate = 0, textBaseline = 'middle', color = '#000', fontColor = color, align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }
+ * @returns
+ * @memberof Maker
+ */
   putText ({ text = '', x = 0, y = 0, fontSize = 12, rotate = 0, textBaseline = 'middle', color = '#000', fontColor = color, align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }) {
     this.ctx.save()
     this.ctx.translate(x, y)
@@ -97,6 +122,51 @@ class Maker {
     this.ctx.restore()
     return Promise.resolve()
   }
+  /**
+   * 放文段, 可换行
+   *
+   * @param {*} { text = '', x = 0, y = 0, fontSize = 12, textBaseline = 'middle', color = '#000', width = 0, fontColor = color, align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }
+   * @memberof Maker
+   */
+  async putParagraph ({ text = '', x = 0, y = 0, fontSize = 12, textBaseline = 'middle', lineHeight = 1.2, color = '#000', width = 200, fontColor = color, align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }) {
+    if (!text) {
+      return Promise.reject(new Error('请输入文段'))
+    }
+    text = text.replace(/↵/g, '|')
+    text = text.replace(/\n/g, '|')
+    text += '|'
+    let tempStr = ''
+    this.ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`
+    let line = 0
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] !== '|' && this.ctx.measureText(tempStr).width <= width) {
+        tempStr += (text[i] === '|' ? '' : text[i])
+      } else {
+        await this.putText({
+          text: tempStr,
+          x: x,
+          y: y + ((fontSize * lineHeight + 4) * line),
+          fontSize,
+          textBaseline,
+          color,
+          fontColor,
+          align,
+          fontFamily,
+          fontWeight
+        })
+        line++
+        tempStr = (text[i] === '|' ? '' : text[i])
+      }
+    }
+    return Promise.resolve()
+  }
+  /**
+   * 放图片
+   *
+   * @param {*} { img = '', x = 0, y = 0, width = 0, height = 0, rotate = 0 }
+   * @returns
+   * @memberof Maker
+   */
   async putImg ({ img = '', x = 0, y = 0, width = 0, height = 0, rotate = 0 }) {
     // 搞事之前,先保存
     this.ctx.save()
@@ -124,11 +194,11 @@ class Maker {
       // 放毒
       this.ctx.drawImage(imgDom, 0, 0, w, h)
     } else {
-    // 将坐标原点转移到目的地
+      // 将坐标原点转移到目的地
       this.ctx.translate(x, y)
       // 放毒
       this.ctx.drawImage(imgDom, 0, 0, w, h)
-    // 把坐标原点放回去
+      // 把坐标原点放回去
     }
     this.ctx.translate(-x, -y)
     // 回滚,让ctx对象回到图层上
@@ -137,8 +207,15 @@ class Maker {
     return Promise.resolve()
   }
   // 放置圆形图片
+  /**
+   * 放圆形图片
+   *
+   * @param {*} { img = '', x = 0, y = 0, width = 0, height = 0, rotate = 0 }
+   * @returns
+   * @memberof Maker
+   */
   async putCircularImg ({ img = '', x = 0, y = 0, width = 0, height = 0, rotate = 0 }) {
-  // 搞事之前,先保存
+    // 搞事之前,先保存
     this.ctx.save()
     let imgDom = null
     let w = width
@@ -168,7 +245,7 @@ class Maker {
       // 放毒
       this.ctx.drawImage(imgDom, 0, 0, w, h)
     } else {
-    // 将坐标原点转移到目的地
+      // 将坐标原点转移到目的地
       this.ctx.translate(x, y)
       this.ctx.beginPath()
       let round = w > h ? h / 2 : w / 2
@@ -184,7 +261,13 @@ class Maker {
     // 下一步
     return Promise.resolve()
   }
-
+  /**
+   * 放二维码
+   *
+   * @param {*} { text = '', width = 200, height = width, margin = 0, errorCorrectionLevel = 'H', x = 0, y = 0, rotate = 0, logo = '', logoWidth = width / 3, logoHeight = logoWidth }
+   * @returns
+   * @memberof Maker
+   */
   async putQrcode ({ text = '', width = 200, height = width, margin = 0, errorCorrectionLevel = 'H', x = 0, y = 0, rotate = 0, logo = '', logoWidth = width / 3, logoHeight = logoWidth }) {
     if (!text) {
       return Promise.reject(new Error('请输入文案'))
@@ -244,6 +327,12 @@ class Maker {
       }
       img.src = url
     })
+  }
+  getContext () {
+    return this.ctx
+  }
+  getCanvas () {
+    return this.canvas
   }
 }
 
