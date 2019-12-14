@@ -101,6 +101,14 @@ function () {
       });
     }
   }
+  /**
+   * 放一个矩形
+   *
+   * @param {*} { background = '#fff', width = 0, height = 0, x = 0, y = 0, rotate = 0 }
+   * @returns
+   * @memberof Maker
+   */
+
 
   createClass_default()(Maker, [{
     key: "putFillRect",
@@ -145,6 +153,14 @@ function () {
       this.ctx.restore();
       return Promise.resolve();
     }
+    /**
+     * 放一条线
+     *
+     * @param {*} { width = 1, lineWidth = width, color = '#000', start = { x: 0, y: 0 }, end = null }
+     * @returns
+     * @memberof Maker
+     */
+
   }, {
     key: "putLine",
     value: function putLine(_ref2) {
@@ -172,6 +188,14 @@ function () {
       this.ctx.stroke();
       this.ctx.restore();
     }
+    /**
+     * 放一个多边形
+     *
+     * @param {*} { background = '', borderWidth = 0, borderColor = '', paths = [] }
+     * @returns
+     * @memberof Maker
+     */
+
   }, {
     key: "putPolygon",
     value: function putPolygon(_ref3) {
@@ -223,6 +247,14 @@ function () {
       this.ctx.restore();
       return Promise.resolve();
     }
+    /**
+    * 放文字
+    *
+    * @param {*} { text = '', x = 0, y = 0, fontSize = 12, rotate = 0, textBaseline = 'middle', color = '#000', fontColor = color, align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }
+    * @returns
+    * @memberof Maker
+    */
+
   }, {
     key: "putText",
     value: function putText(_ref4) {
@@ -262,79 +294,86 @@ function () {
       this.ctx.restore();
       return Promise.resolve();
     }
+    /**
+     * 放文段, 可换行
+     *
+     * @param {*} { text = '', x = 0, y = 0, fontSize = 12, textBaseline = 'middle', color = '#000', width = 0, fontColor = color, align = 'left', fontWeight = 'normal', fontFamily = 'sans-serif' }
+     * @memberof Maker
+     */
+
   }, {
-    key: "putImg",
+    key: "putParagraph",
     value: function () {
-      var _putImg = asyncToGenerator_default()(
+      var _putParagraph = asyncToGenerator_default()(
       /*#__PURE__*/
       regenerator_default.a.mark(function _callee(_ref5) {
-        var _ref5$img, img, _ref5$x, x, _ref5$y, y, _ref5$width, width, _ref5$height, height, _ref5$rotate, rotate, imgDom, w, h, centerX, centerY;
+        var _ref5$text, text, _ref5$x, x, _ref5$y, y, _ref5$fontSize, fontSize, _ref5$textBaseline, textBaseline, _ref5$lineHeight, lineHeight, _ref5$color, color, _ref5$width, width, _ref5$fontColor, fontColor, _ref5$align, align, _ref5$fontWeight, fontWeight, _ref5$fontFamily, fontFamily, tempStr, line, i;
 
         return regenerator_default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _ref5$img = _ref5.img, img = _ref5$img === void 0 ? '' : _ref5$img, _ref5$x = _ref5.x, x = _ref5$x === void 0 ? 0 : _ref5$x, _ref5$y = _ref5.y, y = _ref5$y === void 0 ? 0 : _ref5$y, _ref5$width = _ref5.width, width = _ref5$width === void 0 ? 0 : _ref5$width, _ref5$height = _ref5.height, height = _ref5$height === void 0 ? 0 : _ref5$height, _ref5$rotate = _ref5.rotate, rotate = _ref5$rotate === void 0 ? 0 : _ref5$rotate;
-                // 搞事之前,先保存
-                this.ctx.save();
-                imgDom = null;
-                w = width;
-                h = height;
+                _ref5$text = _ref5.text, text = _ref5$text === void 0 ? '' : _ref5$text, _ref5$x = _ref5.x, x = _ref5$x === void 0 ? 0 : _ref5$x, _ref5$y = _ref5.y, y = _ref5$y === void 0 ? 0 : _ref5$y, _ref5$fontSize = _ref5.fontSize, fontSize = _ref5$fontSize === void 0 ? 12 : _ref5$fontSize, _ref5$textBaseline = _ref5.textBaseline, textBaseline = _ref5$textBaseline === void 0 ? 'middle' : _ref5$textBaseline, _ref5$lineHeight = _ref5.lineHeight, lineHeight = _ref5$lineHeight === void 0 ? 1.2 : _ref5$lineHeight, _ref5$color = _ref5.color, color = _ref5$color === void 0 ? '#000' : _ref5$color, _ref5$width = _ref5.width, width = _ref5$width === void 0 ? 200 : _ref5$width, _ref5$fontColor = _ref5.fontColor, fontColor = _ref5$fontColor === void 0 ? color : _ref5$fontColor, _ref5$align = _ref5.align, align = _ref5$align === void 0 ? 'left' : _ref5$align, _ref5$fontWeight = _ref5.fontWeight, fontWeight = _ref5$fontWeight === void 0 ? 'normal' : _ref5$fontWeight, _ref5$fontFamily = _ref5.fontFamily, fontFamily = _ref5$fontFamily === void 0 ? 'sans-serif' : _ref5$fontFamily;
 
-                if (img) {
-                  _context.next = 7;
+                if (text) {
+                  _context.next = 3;
                   break;
                 }
 
-                return _context.abrupt("return", Promise.reject(new Error('请传入图片路径或者dom对象')));
+                return _context.abrupt("return", Promise.reject(new Error('请输入文段')));
 
-              case 7:
-                if (!(typeof img === 'string')) {
-                  _context.next = 13;
-                  break;
-                }
-
-                _context.next = 10;
-                return this.loadImg(img);
+              case 3:
+                text = text.replace(/↵/g, '|');
+                text = text.replace(/\n/g, '|');
+                text += '|';
+                tempStr = '';
+                this.ctx.font = "".concat(fontWeight, " ").concat(fontSize, "px ").concat(fontFamily);
+                line = 0;
+                i = 0;
 
               case 10:
-                imgDom = _context.sent;
-                _context.next = 14;
-                break;
-
-              case 13:
-                imgDom = img;
-
-              case 14:
-                this.ctx.save();
-
-                if (rotate) {
-                  centerX = x + w / 2;
-                  centerY = y + h / 2; // 把图层坐标原点设置在中心点上
-
-                  this.ctx.translate(centerX, centerY); // 愉快地旋转
-
-                  this.ctx.rotate(rotate * Math.PI / 180); // 图层坐标原点回到坐标原点
-
-                  this.ctx.translate(-centerX, -centerY); // 将坐标原点转移到目的地
-
-                  this.ctx.translate(x, y); // 放毒
-
-                  this.ctx.drawImage(imgDom, 0, 0, w, h);
-                } else {
-                  // 将坐标原点转移到目的地
-                  this.ctx.translate(x, y); // 放毒
-
-                  this.ctx.drawImage(imgDom, 0, 0, w, h); // 把坐标原点放回去
+                if (!(i < text.length)) {
+                  _context.next = 22;
+                  break;
                 }
 
-                this.ctx.translate(-x, -y); // 回滚,让ctx对象回到图层上
+                if (!(text[i] !== '|' && this.ctx.measureText(tempStr).width <= width)) {
+                  _context.next = 15;
+                  break;
+                }
 
-                this.ctx.restore(); // 下一步
+                tempStr += text[i] === '|' ? '' : text[i];
+                _context.next = 19;
+                break;
 
-                return _context.abrupt("return", Promise.resolve());
+              case 15:
+                _context.next = 17;
+                return this.putText({
+                  text: tempStr,
+                  x: x,
+                  y: y + (fontSize * lineHeight + 4) * line,
+                  fontSize: fontSize,
+                  textBaseline: textBaseline,
+                  color: color,
+                  fontColor: fontColor,
+                  align: align,
+                  fontFamily: fontFamily,
+                  fontWeight: fontWeight
+                });
+
+              case 17:
+                line++;
+                tempStr = text[i] === '|' ? '' : text[i];
 
               case 19:
+                i++;
+                _context.next = 10;
+                break;
+
+              case 22:
+                return _context.abrupt("return", Promise.resolve());
+
+              case 23:
               case "end":
                 return _context.stop();
             }
@@ -342,20 +381,27 @@ function () {
         }, _callee, this);
       }));
 
-      function putImg(_x) {
-        return _putImg.apply(this, arguments);
+      function putParagraph(_x) {
+        return _putParagraph.apply(this, arguments);
       }
 
-      return putImg;
-    }() // 放置圆形图片
+      return putParagraph;
+    }()
+    /**
+     * 放图片
+     *
+     * @param {*} { img = '', x = 0, y = 0, width = 0, height = 0, rotate = 0 }
+     * @returns
+     * @memberof Maker
+     */
 
   }, {
-    key: "putCircularImg",
+    key: "putImg",
     value: function () {
-      var _putCircularImg = asyncToGenerator_default()(
+      var _putImg = asyncToGenerator_default()(
       /*#__PURE__*/
       regenerator_default.a.mark(function _callee2(_ref6) {
-        var _ref6$img, img, _ref6$x, x, _ref6$y, y, _ref6$width, width, _ref6$height, height, _ref6$rotate, rotate, imgDom, w, h, centerX, centerY, round, _round;
+        var _ref6$img, img, _ref6$x, x, _ref6$y, y, _ref6$width, width, _ref6$height, height, _ref6$rotate, rotate, imgDom, w, h, centerX, centerY;
 
         return regenerator_default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -405,6 +451,101 @@ function () {
 
                   this.ctx.translate(-centerX, -centerY); // 将坐标原点转移到目的地
 
+                  this.ctx.translate(x, y); // 放毒
+
+                  this.ctx.drawImage(imgDom, 0, 0, w, h);
+                } else {
+                  // 将坐标原点转移到目的地
+                  this.ctx.translate(x, y); // 放毒
+
+                  this.ctx.drawImage(imgDom, 0, 0, w, h); // 把坐标原点放回去
+                }
+
+                this.ctx.translate(-x, -y); // 回滚,让ctx对象回到图层上
+
+                this.ctx.restore(); // 下一步
+
+                return _context2.abrupt("return", Promise.resolve());
+
+              case 19:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function putImg(_x2) {
+        return _putImg.apply(this, arguments);
+      }
+
+      return putImg;
+    }() // 放置圆形图片
+
+    /**
+     * 放圆形图片
+     *
+     * @param {*} { img = '', x = 0, y = 0, width = 0, height = 0, rotate = 0 }
+     * @returns
+     * @memberof Maker
+     */
+
+  }, {
+    key: "putCircularImg",
+    value: function () {
+      var _putCircularImg = asyncToGenerator_default()(
+      /*#__PURE__*/
+      regenerator_default.a.mark(function _callee3(_ref7) {
+        var _ref7$img, img, _ref7$x, x, _ref7$y, y, _ref7$width, width, _ref7$height, height, _ref7$rotate, rotate, imgDom, w, h, centerX, centerY, round, _round;
+
+        return regenerator_default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _ref7$img = _ref7.img, img = _ref7$img === void 0 ? '' : _ref7$img, _ref7$x = _ref7.x, x = _ref7$x === void 0 ? 0 : _ref7$x, _ref7$y = _ref7.y, y = _ref7$y === void 0 ? 0 : _ref7$y, _ref7$width = _ref7.width, width = _ref7$width === void 0 ? 0 : _ref7$width, _ref7$height = _ref7.height, height = _ref7$height === void 0 ? 0 : _ref7$height, _ref7$rotate = _ref7.rotate, rotate = _ref7$rotate === void 0 ? 0 : _ref7$rotate;
+                // 搞事之前,先保存
+                this.ctx.save();
+                imgDom = null;
+                w = width;
+                h = height;
+
+                if (img) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                return _context3.abrupt("return", Promise.reject(new Error('请传入图片路径或者dom对象')));
+
+              case 7:
+                if (!(typeof img === 'string')) {
+                  _context3.next = 13;
+                  break;
+                }
+
+                _context3.next = 10;
+                return this.loadImg(img);
+
+              case 10:
+                imgDom = _context3.sent;
+                _context3.next = 14;
+                break;
+
+              case 13:
+                imgDom = img;
+
+              case 14:
+                this.ctx.save();
+
+                if (rotate) {
+                  centerX = x + w / 2;
+                  centerY = y + h / 2; // 把图层坐标原点设置在中心点上
+
+                  this.ctx.translate(centerX, centerY); // 愉快地旋转
+
+                  this.ctx.rotate(rotate * Math.PI / 180); // 图层坐标原点回到坐标原点
+
+                  this.ctx.translate(-centerX, -centerY); // 将坐标原点转移到目的地
+
                   this.ctx.translate(x, y);
                   this.ctx.beginPath();
                   round = w > h ? h / 2 : w / 2;
@@ -429,45 +570,53 @@ function () {
 
                 this.ctx.restore(); // 下一步
 
-                return _context2.abrupt("return", Promise.resolve());
+                return _context3.abrupt("return", Promise.resolve());
 
               case 19:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
-      function putCircularImg(_x2) {
+      function putCircularImg(_x3) {
         return _putCircularImg.apply(this, arguments);
       }
 
       return putCircularImg;
     }()
+    /**
+     * 放二维码
+     *
+     * @param {*} { text = '', width = 200, height = width, margin = 0, errorCorrectionLevel = 'H', x = 0, y = 0, rotate = 0, logo = '', logoWidth = width / 3, logoHeight = logoWidth }
+     * @returns
+     * @memberof Maker
+     */
+
   }, {
     key: "putQrcode",
     value: function () {
       var _putQrcode = asyncToGenerator_default()(
       /*#__PURE__*/
-      regenerator_default.a.mark(function _callee3(_ref7) {
-        var _ref7$text, text, _ref7$width, width, _ref7$height, height, _ref7$margin, margin, _ref7$errorCorrection, errorCorrectionLevel, _ref7$x, x, _ref7$y, y, _ref7$rotate, rotate, _ref7$logo, logo, _ref7$logoWidth, logoWidth, _ref7$logoHeight, logoHeight, qrcode;
+      regenerator_default.a.mark(function _callee4(_ref8) {
+        var _ref8$text, text, _ref8$width, width, _ref8$height, height, _ref8$margin, margin, _ref8$errorCorrection, errorCorrectionLevel, _ref8$x, x, _ref8$y, y, _ref8$rotate, rotate, _ref8$logo, logo, _ref8$logoWidth, logoWidth, _ref8$logoHeight, logoHeight, qrcode;
 
-        return regenerator_default.a.wrap(function _callee3$(_context3) {
+        return regenerator_default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _ref7$text = _ref7.text, text = _ref7$text === void 0 ? '' : _ref7$text, _ref7$width = _ref7.width, width = _ref7$width === void 0 ? 200 : _ref7$width, _ref7$height = _ref7.height, height = _ref7$height === void 0 ? width : _ref7$height, _ref7$margin = _ref7.margin, margin = _ref7$margin === void 0 ? 0 : _ref7$margin, _ref7$errorCorrection = _ref7.errorCorrectionLevel, errorCorrectionLevel = _ref7$errorCorrection === void 0 ? 'H' : _ref7$errorCorrection, _ref7$x = _ref7.x, x = _ref7$x === void 0 ? 0 : _ref7$x, _ref7$y = _ref7.y, y = _ref7$y === void 0 ? 0 : _ref7$y, _ref7$rotate = _ref7.rotate, rotate = _ref7$rotate === void 0 ? 0 : _ref7$rotate, _ref7$logo = _ref7.logo, logo = _ref7$logo === void 0 ? '' : _ref7$logo, _ref7$logoWidth = _ref7.logoWidth, logoWidth = _ref7$logoWidth === void 0 ? width / 3 : _ref7$logoWidth, _ref7$logoHeight = _ref7.logoHeight, logoHeight = _ref7$logoHeight === void 0 ? logoWidth : _ref7$logoHeight;
+                _ref8$text = _ref8.text, text = _ref8$text === void 0 ? '' : _ref8$text, _ref8$width = _ref8.width, width = _ref8$width === void 0 ? 200 : _ref8$width, _ref8$height = _ref8.height, height = _ref8$height === void 0 ? width : _ref8$height, _ref8$margin = _ref8.margin, margin = _ref8$margin === void 0 ? 0 : _ref8$margin, _ref8$errorCorrection = _ref8.errorCorrectionLevel, errorCorrectionLevel = _ref8$errorCorrection === void 0 ? 'H' : _ref8$errorCorrection, _ref8$x = _ref8.x, x = _ref8$x === void 0 ? 0 : _ref8$x, _ref8$y = _ref8.y, y = _ref8$y === void 0 ? 0 : _ref8$y, _ref8$rotate = _ref8.rotate, rotate = _ref8$rotate === void 0 ? 0 : _ref8$rotate, _ref8$logo = _ref8.logo, logo = _ref8$logo === void 0 ? '' : _ref8$logo, _ref8$logoWidth = _ref8.logoWidth, logoWidth = _ref8$logoWidth === void 0 ? width / 3 : _ref8$logoWidth, _ref8$logoHeight = _ref8.logoHeight, logoHeight = _ref8$logoHeight === void 0 ? logoWidth : _ref8$logoHeight;
 
                 if (text) {
-                  _context3.next = 3;
+                  _context4.next = 3;
                   break;
                 }
 
-                return _context3.abrupt("return", Promise.reject(new Error('请输入文案')));
+                return _context4.abrupt("return", Promise.reject(new Error('请输入文案')));
 
               case 3:
-                _context3.next = 5;
+                _context4.next = 5;
                 return browser_default.a.toDataURL(text, {
                   margin: margin,
                   errorCorrectionLevel: errorCorrectionLevel,
@@ -475,8 +624,8 @@ function () {
                 });
 
               case 5:
-                qrcode = _context3.sent;
-                _context3.next = 8;
+                qrcode = _context4.sent;
+                _context4.next = 8;
                 return this.putImg({
                   img: qrcode,
                   width: width,
@@ -488,11 +637,11 @@ function () {
 
               case 8:
                 if (!logo) {
-                  _context3.next = 11;
+                  _context4.next = 11;
                   break;
                 }
 
-                _context3.next = 11;
+                _context4.next = 11;
                 return this.putImg({
                   img: logo,
                   width: logoWidth,
@@ -503,17 +652,17 @@ function () {
                 });
 
               case 11:
-                return _context3.abrupt("return", Promise.resolve());
+                return _context4.abrupt("return", Promise.resolve());
 
               case 12:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
-      function putQrcode(_x3) {
+      function putQrcode(_x4) {
         return _putQrcode.apply(this, arguments);
       }
 
@@ -562,6 +711,16 @@ function () {
         img.src = url;
       });
     }
+  }, {
+    key: "getContext",
+    value: function getContext() {
+      return this.ctx;
+    }
+  }, {
+    key: "getCanvas",
+    value: function getCanvas() {
+      return this.canvas;
+    }
   }]);
 
   return Maker;
@@ -571,6 +730,8 @@ function () {
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--1!./node_modules/vue-loader/lib??vue-loader-options!./src/views/home/index.vue?vue&type=script&lang=js&
 
 
+//
+//
 //
 //
 //
@@ -595,8 +756,8 @@ function () {
           switch (_context.prev = _context.next) {
             case 0:
               maker = new src({
-                width: 370,
-                height: 500,
+                width: 750,
+                height: 1000,
                 backgroundColor: '#fff'
               });
               _context.next = 3;
@@ -620,6 +781,16 @@ function () {
 
             case 5:
               _context.next = 7;
+              return maker.putParagraph({
+                text: '君不见，黄河之水天上来，奔流到海不复回。↵君不见，高堂明镜悲白发，朝如青丝暮成雪。↵人生得意须尽欢，莫使金樽空对月。↵天生我材必有用，千金散尽还复来。↵烹羊宰牛且为乐，会须一饮三百杯。↵岑夫子，丹丘生，将进酒，杯莫停。↵与君歌一曲，请君为我倾耳听。↵钟鼓馔玉不足贵，但愿长醉不愿醒。↵古来圣贤皆寂寞，惟有饮者留其名。↵陈王昔时宴平乐，斗酒十千恣欢谑。↵主人何为言少钱，径须沽取对君酌。↵五花马，千金裘，↵呼儿将出换美酒，与尔同销万古愁。',
+                x: 220,
+                y: 100,
+                width: 250,
+                fontSize: 14
+              });
+
+            case 7:
+              _context.next = 9;
               return maker.putCircularImg({
                 img: __webpack_require__(20),
                 x: 10,
@@ -629,8 +800,8 @@ function () {
                 rotate: 90
               });
 
-            case 7:
-              _context.next = 9;
+            case 9:
+              _context.next = 11;
               return maker.putImg({
                 img: __webpack_require__(20),
                 x: 110,
@@ -640,8 +811,8 @@ function () {
                 rotate: 90
               });
 
-            case 9:
-              _context.next = 11;
+            case 11:
+              _context.next = 13;
               return maker.putQrcode({
                 text: 'http://www.baidu.com',
                 x: 10,
@@ -651,8 +822,8 @@ function () {
                 height: 200
               });
 
-            case 11:
-              _context.next = 13;
+            case 13:
+              _context.next = 15;
               return maker.putPolygon({
                 background: 'rgba(123,123,123, 0.6)',
                 borderWidth: 2,
@@ -672,8 +843,8 @@ function () {
                 }]
               });
 
-            case 13:
-              _context.next = 15;
+            case 15:
+              _context.next = 17;
               return maker.putLine({
                 width: 5,
                 color: 'red',
@@ -687,14 +858,14 @@ function () {
                 }
               });
 
-            case 15:
-              _context.next = 17;
+            case 17:
+              _context.next = 19;
               return maker.canvasToDataUrl();
 
-            case 17:
+            case 19:
               this.poster = _context.sent;
 
-            case 18:
+            case 20:
             case "end":
               return _context.stop();
           }

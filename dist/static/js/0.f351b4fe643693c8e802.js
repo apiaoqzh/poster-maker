@@ -151,54 +151,6 @@ function createRouter() {
   });
   return router;
 }
-// CONCATENATED MODULE: ./src/utils/rem.js
-/*
- * base on clientWidth,then transform to rem,default 320px == 20rem
- */
-function setRem(doc, win) {
-  var docEl = doc.documentElement;
-  var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
-
-  var reCaculate = function reCaculate() {
-    var clientWidth = docEl.clientWidth; // console.log(clientWidth)
-
-    if (!clientWidth) return;
-    docEl.style.fontSize = 75 * (clientWidth / 750) + 'px';
-  };
-
-  if (!doc.addEventListener) return;
-  win.addEventListener(resizeEvt, reCaculate, false);
-  doc.addEventListener('DOMContentLoaded', reCaculate, false);
-}
-/**
- * 自适应rem。首先判断用vw，没有支持vw再用js动态改变html的font-size
- *
- * @param {*} docEl
- * @param {*} padBaseSize
- */
-
-var autoRem = function autoRem(docEl, padBaseSize) {
-  var width;
-
-  var resize = function resize() {
-    var widthDynamic = Math.min(docEl.getBoundingClientRect().width, docEl.clientWidth, padBaseSize);
-
-    if (width !== widthDynamic) {
-      width = widthDynamic;
-      docEl.style.fontSize = "".concat(width / 10, "px");
-    }
-  };
-
-  var el = document.createElement('div');
-  el.setAttribute('style', 'width: 1vw');
-
-  if (!el.style.width) {
-    window.addEventListener && window.addEventListener('orientationchange' in window ? 'orientationchange' : 'resize', resize, false);
-    window.addEventListener('DOMContentLoaded', resize, false);
-  } else {
-    docEl.style.fontSize = '10vw';
-  }
-};
 // CONCATENATED MODULE: ./src/main.js
 
 
@@ -208,9 +160,9 @@ var autoRem = function autoRem(docEl, padBaseSize) {
 
 
 /* import rem.js for setting font-size */
+// import { setRem } from './utils/rem'
+// setRem(document, window)
 
-
-setRem(document, window);
 var main_router = createRouter();
 /* eslint-disable no-new */
 
