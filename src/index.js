@@ -1,12 +1,4 @@
 import QRCode from 'qrcode'
-const getBase64Image = function (img) {
-  const canvas = document.createElement('canvas')
-  canvas.width = img.width
-  canvas.height = img.height
-  const ctx = canvas.getContext('2d')
-  ctx.drawImage(img, 0, 0, img.width, img.height) // 绘制相同图片
-  return canvas.toDataURL('image/png') // 转换成base64数据
-}
 class Maker {
   constructor(options) {
     try {
@@ -257,7 +249,6 @@ class Maker {
       this.ctx.beginPath()
       let round = w > h ? h / 2 : w / 2
       this.ctx.arc(round, round, round, 0, 2 * Math.PI, false)
-      this.ctx.stroke()
       this.ctx.clip()// 剪切图片
       // 放毒
       this.ctx.drawImage(imgDom, 0, 0, w, h)
@@ -324,12 +315,13 @@ class Maker {
   * @memberof Maker
   */
   loadImg (url) {
+    const _this = this
     return new Promise((resolve, reject) => {
       let img = new Image()
       if (url.indexOf(';base64,') === -1) {
         img.crossOrigin = 'Anonymous'
         img.onload = function () {
-          resolve(getBase64Image(img))
+          resolve(_this.getBase64Image(img))
         }
       } else {
         img.onload = function () {
@@ -341,6 +333,14 @@ class Maker {
       }
       img.src = url
     })
+  }
+  async getBase64Image (img) {
+    const canvas = document.createElement('canvas')
+    canvas.width = img.width
+    canvas.height = img.height
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0, img.width, img.height) // 绘制相同图片
+    return this.loadImg(canvas.toDataURL('image/png')) // 转换成base64数据
   }
   getContext () {
     return this.ctx
