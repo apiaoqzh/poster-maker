@@ -319,6 +319,9 @@ class Maker {
   loadImg (url) {
     return new Promise((resolve, reject) => {
       let img = new Image()
+      if (url.indexOf(';base64,') === -1) {
+        img.crossOrigin = 'Anonymous'
+      }
       img.onload = function () {
         resolve(img)
       }
