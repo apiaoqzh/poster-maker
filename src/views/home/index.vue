@@ -52,7 +52,7 @@ export default {
       rotate: 90
     })
     await maker.putImg({
-      img: require('@/assets/img/avatar.jpg'),
+      img: 'http://thirdwx.qlogo.cn/mmopen/2ZZDa7kIdzoVibr8pnpyMG2vQa72qflKcibQQ8khuWqTaXDFYPF8StWL2PNZoZfSmsX4YxKerYOKN9UWwmsIOPI0TMyfBY5aoa/132',
       x: 110,
       y: 10,
       width: 100,
