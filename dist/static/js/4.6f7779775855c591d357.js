@@ -3,14 +3,14 @@
 /***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "static/img/avatar.0b221f2.jpg";
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 
-/***/ 21:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
-// extracted by mini-css-extract-plugin
+module.exports = __webpack_require__.p + "static/img/avatar.0b221f2.jpg";
 
 /***/ }),
 
@@ -18,7 +18,7 @@ module.exports = __webpack_require__.p + "static/img/avatar.0b221f2.jpg";
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5954443c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(21);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5954443c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20);
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5954443c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5954443c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_sass_loader_lib_loader_js_ref_5_3_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_5954443c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
@@ -559,7 +559,6 @@ function () {
                   this.ctx.beginPath();
                   _round = w > h ? h / 2 : w / 2;
                   this.ctx.arc(_round, _round, _round, 0, 2 * Math.PI, false);
-                  this.ctx.stroke();
                   this.ctx.clip(); // 剪切图片
                   // 放毒
 
@@ -678,12 +677,12 @@ function () {
   }, {
     key: "canvasToDataUrl",
     value: function canvasToDataUrl() {
-      var _this = this;
+      var _this2 = this;
 
       var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'image/jpeg';
       var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1.0;
       return new Promise(function (resolve) {
-        resolve(_this.canvas.toDataURL(type, value));
+        resolve(_this2.canvas.toDataURL(type, value));
       });
     }
     /**
@@ -697,12 +696,22 @@ function () {
   }, {
     key: "loadImg",
     value: function loadImg(url) {
+      var _this = this;
+
       return new Promise(function (resolve, reject) {
         var img = new Image();
 
-        img.onload = function () {
-          resolve(img);
-        };
+        if (url.indexOf(';base64,') === -1) {
+          img.crossOrigin = 'Anonymous';
+
+          img.onload = function () {
+            resolve(_this.getBase64Image(img));
+          };
+        } else {
+          img.onload = function () {
+            resolve(img);
+          };
+        }
 
         img.onerror = function () {
           reject(new Error('图片下载失败'));
@@ -711,6 +720,39 @@ function () {
         img.src = url;
       });
     }
+  }, {
+    key: "getBase64Image",
+    value: function () {
+      var _getBase64Image = asyncToGenerator_default()(
+      /*#__PURE__*/
+      regenerator_default.a.mark(function _callee5(img) {
+        var canvas, ctx;
+        return regenerator_default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, img.width, img.height); // 绘制相同图片
+
+                return _context5.abrupt("return", this.loadImg(canvas.toDataURL('image/png')));
+
+              case 6:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function getBase64Image(_x5) {
+        return _getBase64Image.apply(this, arguments);
+      }
+
+      return getBase64Image;
+    }()
   }, {
     key: "getContext",
     value: function getContext() {
@@ -792,7 +834,7 @@ function () {
             case 7:
               _context.next = 9;
               return maker.putCircularImg({
-                img: __webpack_require__(20),
+                img: __webpack_require__(25),
                 x: 10,
                 y: 10,
                 width: 100,
@@ -803,7 +845,7 @@ function () {
             case 9:
               _context.next = 11;
               return maker.putImg({
-                img: __webpack_require__(20),
+                img: 'http://thirdwx.qlogo.cn/mmopen/2ZZDa7kIdzoVibr8pnpyMG2vQa72qflKcibQQ8khuWqTaXDFYPF8StWL2PNZoZfSmsX4YxKerYOKN9UWwmsIOPI0TMyfBY5aoa/132',
                 x: 110,
                 y: 10,
                 width: 100,
@@ -817,7 +859,7 @@ function () {
                 text: 'http://www.baidu.com',
                 x: 10,
                 y: 200,
-                logo: __webpack_require__(20),
+                logo: __webpack_require__(25),
                 width: 200,
                 height: 200
               });

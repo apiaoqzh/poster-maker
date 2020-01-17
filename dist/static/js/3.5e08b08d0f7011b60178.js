@@ -86,8 +86,8 @@ exports.toSJIS = function toSJIS (kanji) {
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var VersionCheck = __webpack_require__(23)
-var Regex = __webpack_require__(24)
+var VersionCheck = __webpack_require__(22)
+var Regex = __webpack_require__(23)
 
 /**
  * Numeric mode encodes data from the decimal digit set (0 - 9)
@@ -843,8 +843,7 @@ exports.from = function from (value, defaultValue) {
 
 /***/ }),
 /* 20 */,
-/* 21 */,
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ECLevel = __webpack_require__(19)
@@ -985,7 +984,7 @@ exports.getTotalCodewordsCount = function getTotalCodewordsCount (version, error
 
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports) {
 
 /**
@@ -1000,7 +999,7 @@ exports.isValid = function isValid (version) {
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports) {
 
 var numeric = '[0-9]+'
@@ -1037,7 +1036,7 @@ exports.testAlphanumeric = function testAlphanumeric (str) {
 
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports) {
 
 function hex2rgba (hex) {
@@ -1140,6 +1139,7 @@ exports.qrToImageData = function qrToImageData (imgData, qr, opts) {
 
 
 /***/ }),
+/* 25 */,
 /* 26 */
 /***/ (function(module, exports) {
 
@@ -1280,7 +1280,7 @@ var BitMatrix = __webpack_require__(32)
 var AlignmentPattern = __webpack_require__(33)
 var FinderPattern = __webpack_require__(34)
 var MaskPattern = __webpack_require__(35)
-var ECCode = __webpack_require__(22)
+var ECCode = __webpack_require__(21)
 var ReedSolomonEncoder = __webpack_require__(36)
 var Version = __webpack_require__(39)
 var FormatInfo = __webpack_require__(40)
@@ -2473,10 +2473,10 @@ exports.mul = function mul (x, y) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var Utils = __webpack_require__(15)
-var ECCode = __webpack_require__(22)
+var ECCode = __webpack_require__(21)
 var ECLevel = __webpack_require__(19)
 var Mode = __webpack_require__(16)
-var VersionCheck = __webpack_require__(23)
+var VersionCheck = __webpack_require__(22)
 var isArray = __webpack_require__(18)
 
 // Generator polynomial used to encode version information
@@ -2682,7 +2682,7 @@ var NumericData = __webpack_require__(42)
 var AlphanumericData = __webpack_require__(43)
 var ByteData = __webpack_require__(44)
 var KanjiData = __webpack_require__(45)
-var Regex = __webpack_require__(24)
+var Regex = __webpack_require__(23)
 var Utils = __webpack_require__(15)
 var dijkstra = __webpack_require__(46)
 
@@ -3392,7 +3392,7 @@ if (true) {
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Utils = __webpack_require__(25)
+var Utils = __webpack_require__(24)
 
 function clearCanvas (ctx, canvas, size) {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -3461,7 +3461,7 @@ exports.renderToDataURL = function renderToDataURL (qrData, canvas, options) {
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Utils = __webpack_require__(25)
+var Utils = __webpack_require__(24)
 
 function getColorAttrib (color, attrib) {
   var alpha = color.a / 255
