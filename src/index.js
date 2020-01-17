@@ -1,5 +1,12 @@
 import QRCode from 'qrcode'
-
+const getBase64Image = function (img) {
+  const canvas = document.createElement('canvas')
+  canvas.width = img.width
+  canvas.height = img.height
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(img, 0, 0, img.width, img.height) // 绘制相同图片
+  return canvas.toDataURL('image/png') // 转换成base64数据
+}
 class Maker {
   constructor(options) {
     try {
@@ -321,9 +328,13 @@ class Maker {
       let img = new Image()
       if (url.indexOf(';base64,') === -1) {
         img.crossOrigin = 'Anonymous'
-      }
-      img.onload = function () {
-        resolve(img)
+        img.onload = function () {
+          resolve(getBase64Image(img))
+        }
+      } else {
+        img.onload = function () {
+          resolve(img)
+        }
       }
       img.onerror = function () {
         reject(new Error('图片下载失败'))
